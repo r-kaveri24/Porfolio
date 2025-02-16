@@ -11,7 +11,7 @@ import ReactIcon from '@/assets/icons/react.svg'
 import CromIcon from '@/assets/icons/chrome.svg'
 import GithubIcon from '@/assets/icons/github.svg'
 import mapImage from '@/assets/images/map.png'
-import smileMemoji from '@/assets/images/memoji-smile.png'
+import smileMemoji from '@/assets/images/memoji-avatar-4.png'
 import { CardHeader } from "@/components/CardHeader";
 import { ToolboxItems } from "@/components/ToolboxItems";
 import { motion } from 'framer-motion'
