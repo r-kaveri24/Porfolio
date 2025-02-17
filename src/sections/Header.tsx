@@ -36,7 +36,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center fixed top-3 w-full z-50">
+    <div className="flex justify-center items-center fixed top-3 w-full z-50 text-xs">
       <nav className="flex gap-1 p-0.5 border border-white/15 bg-white/10 backdrop-blur rounded-full">
         <Link
           href="#home"

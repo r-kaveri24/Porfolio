@@ -56,7 +56,7 @@ export const HeroSection = () => {
       </HeroOrbit>
     </div>
     <div className="container">
-      <div className='flex flex-col items-center'>
+      <div className='flex flex-col items-center relative z-8'>
         <Image src={memojiImage} className='size-[100px]' alt="Person peeking from behind laptop" />
         <div className='bg-gray-950 border border-gray-800 px-4 py-1.5 inline-flex items-center gap-4 rounded-lg'>
           <div className='bg-green-500 size-2.5 rounded-full relative'>
@@ -69,13 +69,13 @@ export const HeroSection = () => {
         <h1 className='font-serif text-3xl md:text-5xl text-center mt-8 tracking-wide'>Kaveri Raut (FullStack developer)</h1>
         <p className='mt-4 text-center md:text-lg text-white/60'>I specialize in transforming designs into, functional, high-performance web applications. Hoping to do same in industry..</p>
       </div>
-      <div className='absolute z-8 left-[10%] sm:left-[25%]  md:left-1/3 md:right-1/3  flex flex-col md:flex-row justify-center items-center mt-8 gap-4'>
-        <a href='/resume\Kaveri_Raut(7220813813).pdf' download className='inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl min-w-fit'>
+      <div className='flex flex-col md:flex-row justify-center items-center mt-8 gap-4'>
+        <a href='/resume\Kaveri_Raut(7220813813).pdf' download className='inline-flex w-full justify-center sm:w-fit items-center gap-2 border border-white/15 px-6 h-12 rounded-xl min-w-fit'>
           <span className='font-semibold'>Download My Resume</span>
           <ArrowDown className='size-4' />
         </a>
         <a href='#contact'
-          className=' inline-flex items-center min-w-fit gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl cursor-pointer'>
+          className='w-full inline-flex items-center justify-center min-w-fit gap-2 border sm:w-fit border-white bg-white text-gray-900 h-12 px-6 rounded-xl cursor-pointer'>
           <span>👋</span>
           <span className='font-semibold'>Let&apos;s Connect</span>
         </a>
