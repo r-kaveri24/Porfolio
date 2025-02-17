@@ -1,3 +1,5 @@
+"use client"
+
 import memojiImage from '@/assets/images/memoji-computer.png'
 import grainImage from '@/assets/images/grain.jpg'
 import StarIcon from "@/assets/icons/star.svg"
@@ -5,8 +7,12 @@ import SparkleIcon from '@/assets/icons/sparkle.svg'
 import ArrowDown from '@/assets/icons/arrow-down.svg'
 import Image from 'next/image';
 import { HeroOrbit } from '@/components/HeroOrbit';
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+
+
+
 export const HeroSection = () => {
+  const router = useRouter();
   return (<div id='home' className='py-32 md:py-48 lg:py-60 relative z-0 overflow-x-clip'>
     <div className='absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_70%,transparent)]'>
       <div
@@ -63,17 +69,17 @@ export const HeroSection = () => {
         <h1 className='font-serif text-3xl md:text-5xl text-center mt-8 tracking-wide'>Building Exceptional Projects</h1>
         <p className='mt-4 text-center md:text-lg text-white/60'>I specialize in transforming designs into, functional, high-performance web applications. Hoping to do same in industry..</p>
       </div>
-      <div className='flex flex-col md:flex-row justify-center items-center mt-8 gap-4'>
-        <button className='inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl'>
+      <div className='relative flex flex-col md:flex-row justify-center items-center mt-8 gap-4'>
+        <button className='absolute -translate-x-28  inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl z-8'>
           <span className='font-semibold'>Explore My Resume</span>
           <ArrowDown className='size-4' />
         </button>
-        <Link href='#contact' legacyBehavior>
-          <button className='inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl '>
-            <span>👋</span>
-            <span className='font-semibold'>Let&apos;s Connect</span>
-          </button>
-        </Link>
+        <button
+          className='absolute translate-x-28 inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl cursor-pointer z-8'
+          onClick={() => router.push("/contact")}>
+          <span>👋</span>
+          <span className='font-semibold'>Let&apos;s Connect</span>
+        </button>
       </div>
     </div>
   </div>
