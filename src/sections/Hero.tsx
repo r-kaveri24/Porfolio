@@ -74,12 +74,11 @@ export const HeroSection = () => {
           <span className='font-semibold'>Download My Resume</span>
           <ArrowDown className='size-4' />
         </a>
-        <button
-          className=' inline-flex items-center min-w-fit gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl cursor-pointer'
-          onClick={() => router.push("/contact")}>
+        <a href='#contact'
+          className=' inline-flex items-center min-w-fit gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl cursor-pointer'>
           <span>👋</span>
           <span className='font-semibold'>Let&apos;s Connect</span>
-        </button>
+        </a>
       </div>
     </div>
   </div>

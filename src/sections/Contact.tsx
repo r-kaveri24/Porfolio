@@ -7,10 +7,6 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react'
 import email from '@emailjs/browser';
 
-
-
-
-
 interface FormData {
   firstName: string,
   lastName: string,
@@ -22,15 +18,13 @@ interface FormData {
 export const ContactSection = () => {
 
   const formRef = useRef<HTMLFormElement | null>(null);
-
-
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState<FormData>({
     firstName: "",
     lastName: '',
     email: "",
     phone: "",
-    message: ''
+    message: '',
   })
   const handleChange = (
     { target: { name, value } }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -60,6 +54,13 @@ export const ContactSection = () => {
       setLoading(false)
 
       alert('Your message has been send!')
+      setForm({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        message: '',
+      });
     } catch (error) {
       setLoading(false)
       console.log(error)
@@ -67,8 +68,8 @@ export const ContactSection = () => {
     }
   };
   const router = useRouter();
-  return <div className='py-16 pt-12 lg:py-24 lg:pt-20'>
-    <div id='contact' className='container'>
+  return <div className=' relative z-10 py-16 pt-12 lg:py-24 lg:pt-20 '>
+    <div id='contact' className='container '>
       <div className="bg-gradient-to-r from-emerald-300 to-sky-400 text-gray-900 py-8 px-10 rounded-3xl text-center md:text-left">
         <div className='flex flex-col md:flex-row gap-8 md:gap-16 items-center'>
           <div >
@@ -89,7 +90,7 @@ export const ContactSection = () => {
       <div className='flex flex-col lg:flex-row text-white/70 p-8 rounded-lg space-y-8 lg:space-x-8 lg:space-y-0'>
         <div className='flex justify-center items-center' >
           <ul className='space-y-4'>
-            <li className='flex items-center gap-0'>
+            <li className='flex flex:row items-center gap-0'>
               <Image src={phone} alt='phone' className='h-[110px] w-auto mr-6' />
               <p className='text-lg'>+919284673600</p>
             </li>
