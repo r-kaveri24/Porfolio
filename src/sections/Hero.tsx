@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 export const HeroSection = () => {
   const router = useRouter();
   return (<div id='home' className='py-32 md:py-48 lg:py-60 relative z-0 overflow-x-clip'>
-    <div className='absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_70%,transparent)]'>
+    <div className='absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_70%,transparent)] -z-1'>
       <div
         className='absolute inset-0 -z-30 opacity-5'
         style={{
@@ -66,16 +66,16 @@ export const HeroSection = () => {
         </div>
       </div>
       <div className='max-w-lg mx-auto'>
-        <h1 className='font-serif text-3xl md:text-5xl text-center mt-8 tracking-wide'>Building Exceptional Projects</h1>
+        <h1 className='font-serif text-3xl md:text-5xl text-center mt-8 tracking-wide'>Kaveri Raut (FullStack developer)</h1>
         <p className='mt-4 text-center md:text-lg text-white/60'>I specialize in transforming designs into, functional, high-performance web applications. Hoping to do same in industry..</p>
       </div>
-      <div className='relative flex flex-col md:flex-row justify-center items-center mt-8 gap-4'>
-        <button className='absolute -translate-x-28  inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl z-8'>
-          <span className='font-semibold'>Explore My Resume</span>
+      <div className='absolute z-8 left-[10%] sm:left-[25%]  md:left-1/3 md:right-1/3  flex flex-col md:flex-row justify-center items-center mt-8 gap-4'>
+        <a href='/resume\Kaveri_Raut(7220813813).pdf' download className='inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl min-w-fit'>
+          <span className='font-semibold'>Download My Resume</span>
           <ArrowDown className='size-4' />
-        </button>
+        </a>
         <button
-          className='absolute translate-x-28 inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl cursor-pointer z-8'
+          className=' inline-flex items-center min-w-fit gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl cursor-pointer'
           onClick={() => router.push("/contact")}>
           <span>👋</span>
           <span className='font-semibold'>Let&apos;s Connect</span>

@@ -134,8 +134,21 @@ export const AboutSection = () => {
             </div>
           </Card>
           <Card className="h-[320px] p-0 relative md:col-span-2 lg:col-span-1">
-            <Image src={mapImage} alt="map"
-              className="h-full w-full object-cover object-left-top" />
+            {/* <Image src={mapImage} alt="map"
+              className="h-full w-full object-cover object-left-top" /> */}
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120073.0785564342!2d75.2227996965478!3d19.87023875898463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdb9815a369bc63%3A0x712d538b29a2a73e!2sChhatrapati%20Sambhaji%20Nagar%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1739799175168!5m2!1sen!2sin"
+              width="100%"
+              height="400"
+              style={{ border: '0' }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="h-full w-full object-cover object-left-top"
+              title="Google Map Location"
+            />
+
+
+
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-20 rounded-full  after:content-[''] after:absolute after:inset-0 after:outline after:outline-2 after:-outline-offset-2 after:rounded-full after:outline-gray-950/30">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 -z-20 animate-ping [animation-duration:2s]"></div>
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 -z-10"></div>

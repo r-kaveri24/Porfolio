@@ -8,7 +8,7 @@ export const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ["home", "projects", "about", "contact"];
-      const scrollPosition = window.scrollY + window.innerHeight / 2; // Middle of the viewport
+      const scrollPosition = window.scrollY + window.innerHeight;
 
       sections.forEach((section) => {
         const element = document.getElementById(section);
@@ -16,10 +16,8 @@ export const Header = () => {
           const sectionTop = element.offsetTop;
           const sectionHeight = element.offsetHeight;
 
-          // Calculate the middle of the section
-          const sectionMiddle = sectionTop + sectionHeight / 2;
+          const sectionMiddle = sectionTop + sectionHeight;
 
-          // Check if the middle of the section is near the middle of the viewport
           if (
             scrollPosition >= sectionMiddle - sectionHeight / 4 &&
             scrollPosition <= sectionMiddle + sectionHeight / 4
@@ -32,7 +30,6 @@ export const Header = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup on unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
