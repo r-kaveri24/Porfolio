@@ -97,14 +97,14 @@ export const AboutSection = () => {
       <SectionHeader eyebrow='About Me' title="A Glimpse Into My World" description="Learn more about who I am, what I do, and what inspires me." />
       <div className="mt-20 flex flex-col gap-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-5 lg:grid-cols-3">
-          <Card className="h-[320px] col-span-2 lg:col-span-1">
+          <Card className="h-[320px] md:col-span-2 lg:col-span-1">
             <CardHeader title="My Reads" discription="Explore the books shaping my persnality." />
             <div className="w-40 mx-auto mt-2 md:mt-0">
               <Image src={BookImage} alt="Book cover" className="" />
             </div>
 
           </Card>
-          <Card className="h-[320px] col-span-3 lg:col-span-2">
+          <Card className="h-[320px] md:col-span-3 lg:col-span-2">
             <div>
               <CardHeader title="My Toolbox" discription="Explore the techologies and tools I use to craft exceptional  digital experiences."
                 className="" />
