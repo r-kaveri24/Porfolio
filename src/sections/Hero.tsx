@@ -87,7 +87,7 @@ export const HeroSection = () => {
         <button onClick={handleDownload} className='absolute -translate-x-28  inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl z-8'>
           <span className='font-semibold'>Explore My Resume</span>
           <ArrowDown className='size-4' />
-        </a>
+        </button>
         <a href='#contact'
           className='w-full inline-flex items-center justify-center min-w-fit gap-2 border sm:w-fit border-white bg-white text-gray-900 h-12 px-6 rounded-xl cursor-pointer'>
           <span>👋</span>
