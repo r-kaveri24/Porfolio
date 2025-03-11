@@ -1,6 +1,6 @@
-import darkSaasLandingPage from "@/assets/images/dark-saas-landing-page.png";
-import lightSaasLandingPage from "@/assets/images/light-saas-landing-page.png";
-import aiStartupLandingPage from "@/assets/images/ai-startup-landing-page.png";
+import scapeFlow from "@/assets/images/scrapeFlow.png";
+import drakeStudio from "@/assets/images/drakestudio.png";
+import playingMarket from "@/assets/images/playing-market.png";
 import CheckIcon from "@/assets/icons/check-circle.svg"
 import ArrowUpRightIcon from '@/assets/icons/arrow-up-right.svg'
 
@@ -10,47 +10,47 @@ import { Card } from "@/components/card";
 
 const portfolioProjects = [
   {
-    company: "Acme Corp",
-    year: "2022",
-    title: "Dark Saas Landing Page",
+    technology: "Next.js, TypeSciprt, Shad/cn, Tanstack, Prisma",
+    year: "Jan 2024",
+    title: "Scrap Flow",
     results: [
-      { title: "Enhanced user experience by 40%" },
-      { title: "Improved site speed by 50%" },
-      { title: "Increased mobile traffic by 35%" },
+      { title: "Web scraping with puppeteer." },
+      { title: "Implemented the OpenAI." },
+      { title: "Automation done easy way." },
     ],
-    link: "https://youtu.be/4k7IdSLxh6w",
-    image: darkSaasLandingPage,
+    link: "https://scrap-flow.vercel.app/",
+    image: scapeFlow,
   },
   {
-    company: "Innovative Co",
-    year: "2021",
-    title: "Light Saas Landing Page",
+    technology: "React, Locomotion, framermotion, styled compoent.",
+    year: "Jan 2024",
+    title: "Drake Studio",
     results: [
-      { title: "Boosted sales by 20%" },
-      { title: "Expanded customer reach by 35%" },
-      { title: "Increased brand awareness by 15%" },
+      { title: "Smooth scrolling animation with locomotion." },
+      { title: "Customer engaging website with cool ui." },
+      { title: "Responsive with all devices." },
     ],
-    link: "https://youtu.be/7hi5zwO75yc",
-    image: lightSaasLandingPage,
+    link: "https://drake-studio.vercel.app/",
+    image: drakeStudio,
   },
   {
-    company: "Quantum Dynamics",
-    year: "2023",
-    title: "AI Startup Landing Page",
+    technology: "React, tailwind, framermotion,",
+    year: "Dec 2023",
+    title: "Playing Market",
     results: [
-      { title: "Enhanced user experience by 40%" },
-      { title: "Improved site speed by 50%" },
-      { title: "Increased mobile traffic by 35%" },
+      { title: "Playing Market delivers dynamic, animated shopping." },
+      { title: "Hover effects bring titles and cards to life." },
+      { title: "Interactive icons add a unique twist to every hover." },
     ],
-    link: "https://youtu.be/Z7I5uSRHMHg",
-    image: aiStartupLandingPage,
+    link: "https://headphones-webpage.vercel.app/",
+    image: playingMarket,
   },
 ];
 
 export const ProjectsSection = () => {
-  return <section id="projects" className="pb-16 lg:py-24">
+  return <section id="projects" className="pb-16 lg:py-24 pt-20">
     <div className="container ">
-      <SectionHeader eyebrow="Real-world Results" title="Featured Projects" description="See how I transformed concepts into engaging digital experiences." />
+      <SectionHeader eyebrow="Real-world Results" title="Best Three Projects" description="See how I transformed concepts into engaging digital experiences." />
       <div className="flex flex-col mt-10 md:mt-20 gap-20">
         {portfolioProjects.map((project, projectIndex) => (
           <Card key={project.title} className="p-8 pb-0 md:pt-12 md:px-10 lg:pt-16 lg:px-20 sticky"
@@ -61,8 +61,7 @@ export const ProjectsSection = () => {
             <div className="lg:grid lg:grid-cols-2 lg:gap-16  ">
               <div className="lg:pb-16">
                 <div className="bg-gradient-to-r gap-2 from-emerald-300 to-sky-400 inline-flex font-bold uppercase tracking-widest text-sm text-transparent bg-clip-text">
-                  <span>{project.company}</span>
-                  <span>&bill;</span>
+                  <span>{project.technology}</span>
                   <span>{project.year}</span>
 
                 </div>
@@ -83,7 +82,7 @@ export const ProjectsSection = () => {
                 </a>
               </div>
               <div className="relative">
-                <Image src={project.image} alt={project.title} className="mt-8 -mb-4 md:-mb-0 lg:mt-0 lg:absolute lg:h-full lg:w-auto lg:max-w-none" />
+                <Image src={project.image} alt={project.title} className="mt-8 -mb-4 md:-mb-0 lg:mt-0 lg:absolute lg:h-full lg:w-auto lg:max-w-none rounded-xl border border-white/70 border-b-0" />
               </div>
             </div>
           </Card>
