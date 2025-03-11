@@ -13,6 +13,20 @@ import { useRouter } from 'next/navigation'
 
 export const HeroSection = () => {
   const router = useRouter();
+
+  const handleDownload = () => {
+
+    const downloadLink = 'https://dl.dropboxusercontent.com/scl/fi/aad7kjum8trldeg9rjmut/Kaveri-Raut-7220813813.pdf?rlkey=m7vsaai27mhi0pt8ccy678o2a&st=0fgyzkxi';
+
+
+    const link = document.createElement('a');
+    link.href = downloadLink;
+    link.download = 'Kaveri-Raut-Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (<div id='home' className='py-32 md:py-48 lg:py-60 relative z-0 overflow-x-clip'>
     <div className='absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_70%,transparent)]'>
       <div
@@ -70,7 +84,7 @@ export const HeroSection = () => {
         <p className='mt-4 text-center md:text-lg text-white/60'>I specialize in transforming designs into, functional, high-performance web applications. Hoping to do same in industry..</p>
       </div>
       <div className='relative flex flex-col md:flex-row justify-center items-center mt-8 gap-4'>
-        <button className='absolute -translate-x-28  inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl z-8'>
+        <button onClick={handleDownload} className='absolute -translate-x-28  inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl z-8'>
           <span className='font-semibold'>Explore My Resume</span>
           <ArrowDown className='size-4' />
         </button>
