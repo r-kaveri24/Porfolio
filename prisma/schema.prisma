@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(AUTHOR)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  posts        Post[]   @relation("UserPosts")
+}
+
+model Media {
+  id           String   @id @default(cuid())
+  url          String
+  bucket       String
+  key          String
+  contentType  String?
+  size         Int?
+  width        Int?
+  height       Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  postsAsCover Post[]   @relation("PostCoverImage")
+
+  @@index([bucket, key])
+}
+
+model Post {
+  id           String     @id @default(cuid())
+  title        String
+  slug         String     @unique
+  summary      String?
+  content      String
+  status       PostStatus @default(DRAFT)
+  publishedAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  authorId     String
+  coverImageId String?
+  pageViews    PageView[]
+  author       User       @relation("UserPosts", fields: [authorId], references: [id])
+  coverImage   Media?     @relation("PostCoverImage", fields: [coverImageId], references: [id])
+  tags         PostTag[]
+
+  @@index([authorId])
+  @@index([status, publishedAt])
+}
+
+model Tag {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  posts     PostTag[]
+}
+
+model PostTag {
+  postId String
+  tagId  Int
+  post   Post   @relation(fields: [postId], references: [id])
+  tag    Tag    @relation(fields: [tagId], references: [id])
+
+  @@id([postId, tagId])
+  @@index([tagId])
+}
+
+model PageView {
+  id        String   @id @default(cuid())
+  pathname  String
+  postId    String?
+  sessionId String?
+  userAgent String?
+  referrer  String?
+  createdAt DateTime @default(now())
+  post      Post?    @relation(fields: [postId], references: [id])
+
+  @@index([pathname])
+  @@index([postId])
+  @@index([createdAt])
+}
+
+model Motivation {
+  id        String   @id @default(cuid())
+  message   String
+  createdAt DateTime @default(now())
+}
+
+enum UserRole {
+  ADMIN
+  AUTHOR
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}

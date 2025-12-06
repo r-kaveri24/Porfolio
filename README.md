@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Admin Authentication
 
-## Getting Started
+- Goal: secure the `/admin` area with basic email/password credentials. No social login.
+- Strategy: custom credentials auth implemented with Prisma Users, `scrypt` password hashing, and an HTTP-only session cookie containing a signed token.
 
-First, run the development server:
+### What Was Added
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- `src/app/api/auth/login/route.ts`: login API that accepts `email` and `password`, verifies them against the database, and sets a signed `session` cookie on success.
+- `src/middleware.ts`: protects the `/admin` area. Requests to `/admin/*` without a valid session are redirected to `/admin/login`.
+- `src/app/admin/login/page.tsx`: simple login form posting to the login API.
+- `src/lib/auth.ts`: small auth utility module for hashing passwords and creating/verifying signed tokens.
+- `src/lib/prisma.ts`: shared Prisma client singleton.
+- `prisma/seed.ts`: seeds one `ADMIN` user using environment variables.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Database
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- ORM: Prisma (`@prisma/client`).
+- Provider: PostgreSQL (see `prisma/schema.prisma`).
+- Models: includes `User` with `email`, `passwordHash`, and `role` (`ADMIN` | `AUTHOR`).
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Environment Variables
 
-## Learn More
+- `DATABASE_URL`: PostgreSQL connection string used by Prisma.
+- `SESSION_SECRET`: secret for token signing/verification used by session cookies.
+- `ADMIN_EMAIL`: email for the seeded admin user.
+- `ADMIN_PASSWORD`: plaintext password for the seeded admin user (hashed before storage).
 
-To learn more about Next.js, take a look at the following resources:
+Keep these in a local `.env` and do not commit them. `.gitignore` already ignores `.env` and common env file variants.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Seeding the Admin User
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Ensure `DATABASE_URL`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` are set in `.env`.
+2. Apply migrations if needed: `npx prisma migrate dev`.
+3. Seed: `npx prisma db seed`.
 
-## Deploy on Vercel
+This creates a single `ADMIN` user. If the user already exists, the seed script skips creation.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Login Flow
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- The login page submits `email`/`password` to `POST /api/auth/login`.
+- The API checks `User` in the DB and verifies `passwordHash` using `scrypt`.
+- On success and `role === 'ADMIN'`, an HTTP-only `session` cookie is set containing a signed token with `sub`, `email`, `role`, and expiry.
+- Middleware intercepts `/admin/*` requests and validates the `session` cookie; invalid/missing cookies are redirected to `/admin/login`.
+
+### Development
+
+- Start dev server: `npm run dev`.
+- Lint: `npm run lint`.
+- Build: `npm run build`.
+
+### Notes
+
+- Passwords are hashed with `scrypt` and salted. Stored as `salt:hash` in `User.passwordHash`.
+- Tokens are signed using HMAC-SHA256 with `SESSION_SECRET` and encoded in a compact JWT-like format.
+- The middleware is configured to match `'/admin/:path*'` and allows `'/admin/login'` without a session.
