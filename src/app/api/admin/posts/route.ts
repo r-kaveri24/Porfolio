@@ -5,16 +5,38 @@ import { verifySession } from '@/lib/auth'
 import { NextRequest } from 'next/server'
 
 export async function POST(req: Request) {
-  const token = cookies().get('session')?.value || ''
+  const cookieStore = await cookies()
+  const token = cookieStore.get('session')?.value || ''
   const { valid, payload } = verifySession(token)
   if (!valid || !payload || payload.role !== 'ADMIN') return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const body = await req.json()
   const title = String(body.title || '')
   const slug = String(body.slug || title.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-'))
-  const summary = body.summary ? String(body.summary) : null
+  const summaryRaw = body.summary ? String(body.summary) : ''
+  if (!title.trim() || !summaryRaw.trim() || !String(body.content || '').trim() || !Array.isArray(body.tags) || body.tags.length === 0) {
+    return NextResponse.json({ error: 'Missing required fields: title, summary, content, and at least 1 tag' }, { status: 400 })
+  }
+  const summary = summaryRaw
   const content = String(body.content || '')
   const status = body.status === 'PUBLISHED' ? 'PUBLISHED' : 'DRAFT'
-  const created = await prisma.post.create({ data: { title, slug, summary, content, status, authorId: String(payload.sub), publishedAt: status === 'PUBLISHED' ? new Date() : null } })
+  let coverImageId: string | undefined = undefined
+  const coverImageIdInput = body.coverImageId ? String(body.coverImageId) : ''
+  const coverImageUrl = body.coverImageUrl ? String(body.coverImageUrl) : ''
+  if (coverImageIdInput) {
+    coverImageId = coverImageIdInput
+  } else if (coverImageUrl) {
+    const media = await prisma.media.create({ data: { url: coverImageUrl, bucket: 'external', key: coverImageUrl } })
+    coverImageId = media.id
+  }
+  const created = await prisma.post.create({ data: { title, slug, summary, content, status, authorId: String(payload.sub), publishedAt: status === 'PUBLISHED' ? new Date() : null, coverImageId } })
+  const tags: string[] = Array.isArray(body.tags) ? body.tags.filter((t: any) => typeof t === 'string').map((t: string) => t.trim()).filter(Boolean) : []
+  if (tags.length) {
+    for (const name of tags) {
+      const slug = name.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-')
+      const tag = await prisma.tag.upsert({ where: { slug }, update: {}, create: { name, slug } })
+      await prisma.postTag.create({ data: { postId: created.id, tagId: tag.id } })
+    }
+  }
   try {
     if (status === 'PUBLISHED') {
       const stats = {

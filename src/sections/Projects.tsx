@@ -3,6 +3,7 @@ import drakeStudio from "@/assets/images/drakestudio.png";
 import playingMarket from "@/assets/images/playing-market.png";
 import CheckIcon from "@/assets/icons/check-circle.svg"
 import ArrowUpRightIcon from '@/assets/icons/arrow-up-right.svg'
+import { TechIcon } from '@/components/TechIcon'
 
 import Image from "next/image";
 import { SectionHeader } from "@/components/SectionHeadet";
@@ -70,14 +71,14 @@ export const ProjectsSection = () => {
                 <ul className="flex flex-col gap-4 mt-4 md:mt-5">
                   {project.results.map((result, index) => (
                     <li key={index} className="flex gap-2 text-sm md:text-base text-white/50">
-                      <CheckIcon className='size-5 md:size-6' />
+                      <TechIcon src={(CheckIcon as any).src ?? (CheckIcon as unknown as string)} className='size-5 md:size-6' bgClass='bg-white' />
                       <span>{result.title}</span></li>
                   ))}
                 </ul>
                 <a href={project.link}>
                   <button className="bg-white text-gray-950 h-12 w-full rounded-xl font-semibold inline-flex justify-center items-center gap-2 mt-8 md:w-auto md:px-6">
                     <span>Visit Live Site</span>
-                    <ArrowUpRightIcon className='size-4' />
+                    <TechIcon src={(ArrowUpRightIcon as any).src ?? (ArrowUpRightIcon as unknown as string)} className='size-4' bgClass='bg-gray-900' />
                   </button>
                 </a>
               </div>

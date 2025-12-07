@@ -1,5 +1,6 @@
 'use client'
 import ArrowUpRightIcon from '@/assets/icons/arrow-up-right.svg'
+import { TechIcon } from '@/components/TechIcon'
 import phone from '@/assets/images/phone.png'
 import mail from '@/assets/images/mail.png'
 import Image from 'next/image';
@@ -83,7 +84,7 @@ export const ContactSection = () => {
             <div>
               <button className='text-white bg-gray-900 inline-flex px-6 h-12 items-center rounded-xl gap-2 w-max border border-gray-900'>
                 <span className='font-semibold'>Contact Me</span>
-                <ArrowUpRightIcon className='size-4' />
+                <TechIcon src={(ArrowUpRightIcon as any).src ?? (ArrowUpRightIcon as unknown as string)} className='size-4' bgClass='bg-white' />
               </button>
             </div>
           </div>

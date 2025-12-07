@@ -1,81 +1,51 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
+import { verifySession } from '@/lib/auth'
+import OpenAI from 'openai'
 
-type Action = 'summary' | 'title' | 'tags' | 'motivation'
-
-async function callOpenAI(prompt: string) {
-  const apiKey = process.env.OPENAI_API_KEY || ''
-  const model = process.env.OPENAI_MODEL || 'gpt-4o-mini'
-  if (!apiKey) throw new Error('Missing OPENAI_API_KEY')
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model,
-      temperature: 0.7,
-      messages: [
-        { role: 'system', content: 'Respond ONLY with valid JSON. Avoid prose.' },
-        { role: 'user', content: prompt },
-      ],
-    }),
-  })
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(text)
-  }
-  const json = await res.json()
-  const content = json.choices?.[0]?.message?.content || '{}'
-  return JSON.parse(content)
+function sanitizeText(input: string, max = 4000): string {
+  return String(input || '').replace(/[\u0000-\u001F]/g, '').slice(0, max)
 }
 
 export async function POST(req: Request) {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('session')?.value || ''
+  const { valid, payload } = verifySession(token)
+  if (!valid || !payload || payload.role !== 'ADMIN') return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const body = await req.json().catch(() => ({})) as { action?: string; content?: string; stats?: any }
+  const action = String(body.action || '')
+  const content = sanitizeText(String(body.content || ''))
+  const apiKey = process.env.OPENAI_API_KEY || ''
+  if (!apiKey) return NextResponse.json({ error: 'AI not configured' }, { status: 500 })
+  const client = new OpenAI({ apiKey })
   try {
-    const body = await req.json().catch(() => ({})) as { action: Action; content?: string; stats?: any }
-    const action = body.action
-    if (!action) return NextResponse.json({ error: 'Missing action' }, { status: 400 })
-
-    if (action === 'summary') {
-      const content = body.content || ''
-      const data = await callOpenAI(
-        `You are a helpful writing assistant. Summarize the following blog content in 1-2 sentences.
-Output JSON: {"summary": "..."}
-CONTENT:\n${content}`
-      )
-      return NextResponse.json({ summary: String(data.summary || '').trim() })
-    }
     if (action === 'title') {
-      const content = body.content || ''
-      const data = await callOpenAI(
-        `Suggest a compelling blog post title based on content. Avoid quotes.
-Output JSON: {"title": "..."}
-CONTENT:\n${content}`
-      )
-      return NextResponse.json({ title: String(data.title || '').trim() })
+      const prompt = `Write a concise, catchy blog post title based on the content. Return just the title.\n\nContent:\n${content}`
+      const res = await client.chat.completions.create({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], temperature: 0.7 })
+      const title = res.choices?.[0]?.message?.content?.trim() || ''
+      return NextResponse.json({ title })
+    }
+    if (action === 'summary') {
+      const prompt = `Summarize the following post in 1–2 sentences. Return plain text.\n\n${content}`
+      const res = await client.chat.completions.create({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], temperature: 0.3 })
+      const summary = res.choices?.[0]?.message?.content?.trim() || ''
+      return NextResponse.json({ summary })
     }
     if (action === 'tags') {
-      const content = body.content || ''
-      const data = await callOpenAI(
-        `Suggest 3-6 concise tags for this content.
-Output JSON: {"tags": ["tag1","tag2",...]}
-CONTENT:\n${content}`
-      )
-      const tags = Array.isArray(data.tags) ? data.tags.map((t: any) => String(t).trim()).filter(Boolean) : []
+      const prompt = `Suggest 3-6 short tags (one or two words) for the content. Return as a comma-separated list.\n\n${content}`
+      const res = await client.chat.completions.create({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], temperature: 0.6 })
+      const raw = res.choices?.[0]?.message?.content || ''
+      const tags = raw.split(',').map(s => s.trim()).filter(Boolean).slice(0, 6)
       return NextResponse.json({ tags })
     }
     if (action === 'motivation') {
-      const stats = body.stats || {}
-      const data = await callOpenAI(
-        `Act as a kind, concise writing coach. Given these stats, produce a short motivational message (1 sentence).
-Output JSON: {"message": "..."}
-STATS:\n${JSON.stringify(stats)}`
-      )
-      return NextResponse.json({ message: String(data.message || '').trim() })
+      const prompt = `Based on these blog stats, produce a short uplifting message to encourage publishing more.\n\n${JSON.stringify(body.stats ?? {})}`
+      const res = await client.chat.completions.create({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], temperature: 0.7 })
+      const message = res.choices?.[0]?.message?.content?.trim() || ''
+      return NextResponse.json({ message })
     }
-    return NextResponse.json({ error: 'Unsupported action' }, { status: 400 })
+    return NextResponse.json({ error: 'Unknown action' }, { status: 400 })
   } catch (e: any) {
-    return NextResponse.json({ error: e?.message || 'AI error' }, { status: 500 })
+    return NextResponse.json({ error: 'AI error', message: e?.message ?? 'unknown' }, { status: 500 })
   }
 }
-

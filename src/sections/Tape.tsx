@@ -1,4 +1,5 @@
 import StarIcon from '@/assets/icons/star.svg'
+import { TechIcon } from '@/components/TechIcon'
 import { Fragment } from 'react';
 const words = [
   'Performant',
@@ -25,7 +26,7 @@ export const TapeSection = () => {
               {words.map(word => (
                 <div key={word} className='inline-flex gap-4 items-center'>
                   <span className='text-gray-900 uppercase text-sm font-extrabold'>{word}</span>
-                  <StarIcon className='size-6 text-gray-900 -rotate-12' />
+                  <TechIcon src={(StarIcon as any).src ?? (StarIcon as unknown as string)} className='size-6 -rotate-12' bgClass='bg-gray-900' />
                 </div>
               ))}
             </Fragment>

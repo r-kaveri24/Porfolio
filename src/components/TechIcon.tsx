@@ -1,14 +1,19 @@
-export const TechIcon = ({ component }: { component: React.ElementType }) => {
-    const Component = component
+import { twMerge } from 'tailwind-merge'
+
+export const TechIcon = ({ src, className, bgClass }: { src: string; className?: string; bgClass?: string }) => {
     return (
-        <>
-            <Component className='size-10 fill-[url(#tech-icon-gradient)]' />
-            <svg className="size-0 absolute">
-                <linearGradient id="tech-icon-gradient">
-                    <stop offset='0%' stopColor="rgb(110 231 183)" />
-                    <stop offset='100%' stopColor="rgb(56 189 248)" />
-                </linearGradient>
-            </svg>
-        </>
+        <span
+            className={twMerge('inline-block size-10', bgClass ?? 'bg-gradient-to-r from-emerald-300 to-sky-400', className)}
+            style={{
+                WebkitMaskImage: `url(${src})`,
+                maskImage: `url(${src})`,
+                WebkitMaskRepeat: 'no-repeat',
+                maskRepeat: 'no-repeat',
+                WebkitMaskSize: 'contain',
+                maskSize: 'contain',
+                WebkitMaskPosition: 'center',
+                maskPosition: 'center',
+            }}
+        />
     )
 }

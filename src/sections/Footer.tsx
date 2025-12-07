@@ -1,4 +1,5 @@
 import ArrowUp from '@/assets/icons/arrow-up-right.svg'
+import { TechIcon } from '@/components/TechIcon'
 
 const footerLinks = [
   {
@@ -29,7 +30,7 @@ export const Footer = () => {
           {footerLinks.map(link => (
             <a href={link.link} key={link.title} className='inline-flex items-center gap-1.5 cursor-pointer'>
               <span className='font-semibold'>{link.title}</span>
-              <ArrowUp className='size-4' />
+              <TechIcon src={(ArrowUp as any).src ?? (ArrowUp as unknown as string)} className='size-4' bgClass='bg-white' />
             </a>
           ))}
         </nav>

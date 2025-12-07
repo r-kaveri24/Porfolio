@@ -20,27 +20,27 @@ import { useRef } from "react";
 const toolbolxItems = [
   {
     title: 'JavaScript',
-    iconType: JavascriptIcon,
+    iconSrc: (JavascriptIcon as any).src ?? (JavascriptIcon as unknown as string),
   },
   {
     title: 'HTML5',
-    iconType: HTMLIcon,
+    iconSrc: (HTMLIcon as any).src ?? (HTMLIcon as unknown as string),
   },
   {
     title: 'CSS3',
-    iconType: CssIcon,
+    iconSrc: (CssIcon as any).src ?? (CssIcon as unknown as string),
   },
   {
     title: 'React',
-    iconType: ReactIcon,
+    iconSrc: (ReactIcon as any).src ?? (ReactIcon as unknown as string),
   },
   {
     title: 'Crome',
-    iconType: CromIcon,
+    iconSrc: (CromIcon as any).src ?? (CromIcon as unknown as string),
   },
   {
     title: 'Github',
-    iconType: GithubIcon,
+    iconSrc: (GithubIcon as any).src ?? (GithubIcon as unknown as string),
   },
 ]
 

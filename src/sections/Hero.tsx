@@ -5,6 +5,7 @@ import grainImage from '@/assets/images/grain.jpg'
 import StarIcon from "@/assets/icons/star.svg"
 import SparkleIcon from '@/assets/icons/sparkle.svg'
 import ArrowDown from '@/assets/icons/arrow-down.svg'
+import { TechIcon } from '@/components/TechIcon'
 import Image from 'next/image';
 import { HeroOrbit } from '@/components/HeroOrbit';
 import { useRouter } from 'next/navigation'
@@ -32,32 +33,32 @@ export const HeroSection = () => {
       <div
         className='absolute inset-0 -z-30 opacity-5'
         style={{
-          backgroundImage: `url(${grainImage})`
+          backgroundImage: `url(${(typeof grainImage === 'string' ? grainImage : (grainImage as any).src)})`
         }}></div>
       <div className='size-[620px] hero-ring'></div>
       <div className='size-[820px] hero-ring'></div>
       <div className='size-[1020px] hero-ring'></div>
       <div className='size-[1220px] hero-ring'></div>
       <HeroOrbit size={430} rotation={-14} orbit orbitDuration='30s' spin spinDuration='3s'>
-        <SparkleIcon className='size-8 text-emerald-300/20' />
+        <TechIcon src={(SparkleIcon as any).src ?? (SparkleIcon as unknown as string)} className='size-8' bgClass='bg-emerald-300/20' />
       </HeroOrbit>
       <HeroOrbit size={440} rotation={79} orbit orbitDuration='32s' spin spinDuration='3s'>
-        <SparkleIcon className='size-5 text-emerald-300/20' />
+        <TechIcon src={(SparkleIcon as any).src ?? (SparkleIcon as unknown as string)} className='size-5' bgClass='bg-emerald-300/20' />
       </HeroOrbit>
       <HeroOrbit size={520} rotation={-41} orbit orbitDuration='34s'>
         <div className='size-2 rounded-full bg-emerald-300/20' />
       </HeroOrbit>
       <HeroOrbit size={530} rotation={178} orbit orbitDuration='36s' spin spinDuration='3s'>
-        <SparkleIcon className='size-10 text-emerald-300/20' />
+        <TechIcon src={(SparkleIcon as any).src ?? (SparkleIcon as unknown as string)} className='size-10' bgClass='bg-emerald-300/20' />
       </HeroOrbit>
       <HeroOrbit size={550} rotation={20} orbit orbitDuration='38s' spin spinDuration='6s'>
-        <StarIcon className='size-12 text-emerald-300' />
+        <TechIcon src={(StarIcon as any).src ?? (StarIcon as unknown as string)} className='size-12' bgClass='bg-emerald-300' />
       </HeroOrbit>
       <HeroOrbit size={590} rotation={98} orbit orbitDuration='40s' spin spinDuration='6s'>
-        <StarIcon className='size-8 text-emerald-300' />
+        <TechIcon src={(StarIcon as any).src ?? (StarIcon as unknown as string)} className='size-8' bgClass='bg-emerald-300' />
       </HeroOrbit>
       <HeroOrbit size={650} rotation={-5} orbit orbitDuration='42s' spin spinDuration='3s'>
-        <SparkleIcon className='size-14 text-emerald-300/20' />
+        <TechIcon src={(SparkleIcon as any).src ?? (SparkleIcon as unknown as string)} className='size-14' bgClass='bg-emerald-300/20' />
       </HeroOrbit>
       <HeroOrbit size={710} rotation={144} orbit orbitDuration='44s'>
         <div className='size-2 rounded-full bg-emerald-300/20' />
@@ -66,7 +67,7 @@ export const HeroSection = () => {
         <div className='size-3 rounded-full bg-emerald-300/20' />
       </HeroOrbit>
       <HeroOrbit size={800} rotation={-72} orbit orbitDuration='48s' spin spinDuration='6s'>
-        <StarIcon className='size-28 text-emerald-300' />
+        <TechIcon src={(StarIcon as any).src ?? (StarIcon as unknown as string)} className='size-28' bgClass='bg-emerald-300' />
       </HeroOrbit>
     </div>
     <div className="container">
@@ -86,7 +87,7 @@ export const HeroSection = () => {
       <div className='relative flex flex-col md:flex-row justify-center items-center mt-8 gap-4'>
         <button onClick={handleDownload} className='  inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl '>
           <span className='font-semibold'>Explore My Resume</span>
-          <ArrowDown className='size-4' />
+          <TechIcon src={(ArrowDown as any).src ?? (ArrowDown as unknown as string)} className='size-4' bgClass='bg-white' />
         </button>
         <a href='#contact'
           className=' w-full inline-flex items-center justify-center min-w-fit gap-2 border sm:w-fit border-white bg-white text-gray-900 h-12 px-6 rounded-xl cursor-pointer '>

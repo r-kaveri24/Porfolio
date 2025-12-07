@@ -1,13 +1,13 @@
 "use client"
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 
-export default function EditForm({ post }: { post: { id: string; title: string; slug: string; summary: string; content: string; status: 'DRAFT' | 'PUBLISHED'; tags?: string[]; coverImageUrl?: string } }) {
-  const [form, setForm] = useState({ title: post.title, slug: post.slug, summary: post.summary, content: post.content, status: post.status, coverImageUrl: post.coverImageUrl || '' })
-  const [tags, setTags] = useState<string[]>(post.tags || [])
-  const [tagInput, setTagInput] = useState('')
+export default function NewPostClient() {
+  const [form, setForm] = useState({ title: '', slug: '', summary: '', content: '', status: 'DRAFT', coverImageUrl: '' })
   const [suggestedTags, setSuggestedTags] = useState<string[]>([])
-  const [coverPreview, setCoverPreview] = useState(post.coverImageUrl || '')
+  const [tags, setTags] = useState<string[]>([])
+  const [tagInput, setTagInput] = useState('')
+  const [coverPreview, setCoverPreview] = useState('')
   const [coverImageId, setCoverImageId] = useState<string | undefined>(undefined)
   const [validationError, setValidationError] = useState('')
   const submit = async (e: React.FormEvent) => {
@@ -18,8 +18,8 @@ export default function EditForm({ post }: { post: { id: string; title: string; 
       return
     }
     setValidationError('')
-    const payload = { ...form, status: form.status, tags, coverImageId }
-    const res = await fetch(`/api/admin/posts/${post.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    const payload = { ...form, tags, coverImageId }
+    const res = await fetch('/api/admin/posts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
     if (res.ok) window.location.href = '/admin/posts'
   }
   const genSummary = async () => {
@@ -56,10 +56,10 @@ export default function EditForm({ post }: { post: { id: string; title: string; 
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 19 8 12l7-7" stroke="currentColor" strokeWidth="2" fill="none"/></svg>
           Back to Posts
         </Link>
-        <button form="edit-post-form" className="inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-10 px-4 rounded-xl">Save Changes</button>
+        <button form="new-post-form" className="inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-10 px-4 rounded-xl">Create Post</button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-6">
-        <form id="edit-post-form" onSubmit={submit} className="bg-gray-800 rounded-2xl p-5 space-y-4 border border-white/10">
+        <form id="new-post-form" onSubmit={submit} className="bg-gray-800 rounded-2xl p-5 space-y-4 border border-white/10">
           <div>
             <div className="text-sm text-white/60 mb-1">Title</div>
             <div className="flex gap-2">
@@ -89,7 +89,7 @@ export default function EditForm({ post }: { post: { id: string; title: string; 
             <div className="space-y-3">
               <div>
                 <div className="text-sm text-white/60 mb-1">Status</div>
-                <select className="w-full h-10 px-3 rounded-xl bg-gray-900 border border-white/10" value={form.status} onChange={e => setForm({ ...form, status: e.target.value as any })}>
+                <select className="w-full h-10 px-3 rounded-xl bg-gray-900 border border-white/10" value={form.status} onChange={e => setForm({ ...form, status: e.target.value })}>
                   <option value="DRAFT">Draft</option>
                   <option value="PUBLISHED">Published</option>
                 </select>
