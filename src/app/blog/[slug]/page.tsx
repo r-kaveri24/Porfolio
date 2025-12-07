@@ -1,7 +1,10 @@
 import { prisma } from '@/lib/prisma'
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await prisma.post.findUnique({ where: { slug: params.slug } })
+  let post: any = null
+  try {
+    post = await prisma.post.findUnique({ where: { slug: params.slug } })
+  } catch {}
   if (!post || post.status !== 'PUBLISHED') {
     return <div className="container py-12">Not found</div>
   }
@@ -13,3 +16,5 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     </article>
   )
 }
+
+export const dynamic = 'force-dynamic'

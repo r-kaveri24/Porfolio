@@ -2,7 +2,10 @@ import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 
 export default async function PostsListPage() {
-  const posts = await prisma.post.findMany({ where: { status: 'PUBLISHED' }, orderBy: { publishedAt: 'desc' }, include: { coverImage: true, tags: { include: { tag: true } } } })
+  let posts: any[] = []
+  try {
+    posts = await prisma.post.findMany({ where: { status: 'PUBLISHED' }, orderBy: { publishedAt: 'desc' }, include: { coverImage: true, tags: { include: { tag: true } } } })
+  } catch {}
   return (
     <div className="px-6 py-12">
       <div className="max-w-6xl mx-auto">
@@ -32,3 +35,5 @@ export default async function PostsListPage() {
     </div>
   )
 }
+
+export const dynamic = 'force-dynamic'

@@ -2,12 +2,15 @@ import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 
 export async function PostsSection() {
-  const posts = await prisma.post.findMany({
-    where: { status: 'PUBLISHED' },
-    orderBy: { publishedAt: 'desc' },
-    take: 3,
-    include: { coverImage: true },
-  })
+  let posts: any[] = []
+  try {
+    posts = await prisma.post.findMany({
+      where: { status: 'PUBLISHED' },
+      orderBy: { publishedAt: 'desc' },
+      take: 3,
+      include: { coverImage: true },
+    })
+  } catch {}
 
   if (!posts.length) return null
 
