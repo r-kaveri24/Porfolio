@@ -1,55 +1,93 @@
-## Admin Authentication
+## Assignment Overview
 
-- Goal: secure the `/admin` area with basic email/password credentials. No social login.
-- Strategy: custom credentials auth implemented with Prisma Users, `scrypt` password hashing, and an HTTP-only session cookie containing a signed token.
+This repository implements a full‑stack CRUD application with Next.js 16, TypeScript, Prisma (PostgreSQL), and Tailwind CSS. It includes a secure admin dashboard (email/password), a clean public UI, basic testing and CI, and optional AI features to help with post authoring.
 
-### What Was Added
+## Features
 
-- `src/app/api/auth/login/route.ts`: login API that accepts `email` and `password`, verifies them against the database, and sets a signed `session` cookie on success.
-- `src/middleware.ts`: protects the `/admin` area. Requests to `/admin/*` without a valid session are redirected to `/admin/login`.
-- `src/app/admin/login/page.tsx`: simple login form posting to the login API.
-- `src/lib/auth.ts`: small auth utility module for hashing passwords and creating/verifying signed tokens.
-- `src/lib/prisma.ts`: shared Prisma client singleton.
-- `prisma/seed.ts`: seeds one `ADMIN` user using environment variables.
+- Admin authentication with secure session cookies
+- CRUD for posts (create, read, update, delete) with validation and tags
+- Image upload with type/size checks and local storage
+- Public posts feed/API
+- Optional AI helpers for title, summary, and tags
+- CI workflow for lint, typecheck, and tests
+- Tailwind‑based responsive UI with a footer showing name, GitHub, and LinkedIn
 
-### Database
+## Tech Stack
 
-- ORM: Prisma (`@prisma/client`).
-- Provider: PostgreSQL (see `prisma/schema.prisma`).
-- Models: includes `User` with `email`, `passwordHash`, and `role` (`ADMIN` | `AUTHOR`).
+- Next.js 16 (App Router, SSR, TypeScript)
+- Prisma ORM with PostgreSQL
+- Tailwind CSS
+- Jest for unit tests
+- GitHub Actions for CI
+- OpenAI API (optional)
 
-### Environment Variables
+## Getting Started
 
-- `DATABASE_URL`: PostgreSQL connection string used by Prisma.
-- `SESSION_SECRET`: secret for token signing/verification used by session cookies.
-- `ADMIN_EMAIL`: email for the seeded admin user.
-- `ADMIN_PASSWORD`: plaintext password for the seeded admin user (hashed before storage).
+- Install dependencies: `npm ci`
+- Create `.env` with the variables below
+- Apply database schema: `npx prisma migrate dev`
+- Seed local users (optional): call `GET /api/auth/seed` in non‑production or set your own users
+- Run dev: `npm run dev`
 
-Keep these in a local `.env` and do not commit them. `.gitignore` already ignores `.env` and common env file variants.
+## Environment Variables
 
-### Seeding the Admin User
+- `DATABASE_URL` — PostgreSQL connection string
+- `SESSION_SECRET` — HMAC secret for session signing
+- `NEXT_PUBLIC_AUTHOR_NAME` — footer display name
+- `NEXT_PUBLIC_GITHUB_URL` — GitHub profile URL
+- `NEXT_PUBLIC_LINKEDIN_URL` — LinkedIn profile URL
+- `OPENAI_API_KEY` — optional, enables AI helpers in admin
 
-1. Ensure `DATABASE_URL`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` are set in `.env`.
-2. Apply migrations if needed: `npx prisma migrate dev`.
-3. Seed: `npx prisma db seed`.
+Optional seed variables (local only):
 
-This creates a single `ADMIN` user. If the user already exists, the seed script skips creation.
+- `ADMIN_EMAIL`, `ADMIN_PASSWORD`
+- `AUTHOR_EMAIL`, `AUTHOR_PASSWORD`
 
-### Login Flow
+## Security
 
-- The login page submits `email`/`password` to `POST /api/auth/login`.
-- The API checks `User` in the DB and verifies `passwordHash` using `scrypt`.
-- On success and `role === 'ADMIN'`, an HTTP-only `session` cookie is set containing a signed token with `sub`, `email`, `role`, and expiry.
-- Middleware intercepts `/admin/*` requests and validates the `session` cookie; invalid/missing cookies are redirected to `/admin/login`.
+- Passwords hashed with `scrypt` and unique salts
+- Session in an HTTP‑only cookie, signed with `SESSION_SECRET`
+- Server‑side auth checks on admin pages; unauthorized users are redirected to `/admin/login`
+- Admin APIs verify `ADMIN` role and return `401` when unauthorized
+- Uploads restricted to images and capped at 8 MB
 
-### Development
+## CRUD Endpoints (Admin)
 
-- Start dev server: `npm run dev`.
-- Lint: `npm run lint`.
-- Build: `npm run build`.
+- Create: `POST /api/admin/posts`
+- Update: `PUT /api/admin/posts/:id`
+- Delete: `DELETE /api/admin/posts/:id`
+- Dashboard: `GET /api/admin/stats`
 
-### Notes
+Public:
 
-- Passwords are hashed with `scrypt` and salted. Stored as `salt:hash` in `User.passwordHash`.
-- Tokens are signed using HMAC-SHA256 with `SESSION_SECRET` and encoded in a compact JWT-like format.
-- The middleware is configured to match `'/admin/:path*'` and allows `'/admin/login'` without a session.
+- `GET /api/public/posts` — list published posts
+
+## AI Helpers (Optional)
+
+- `POST /api/ai/post` with `action` in `{title, summary, tags}`
+- Only available to admin users
+
+## Testing and CI
+
+- Run tests: `npm test`
+- Lint: `npm run lint`
+- Typecheck: `npm run typecheck`
+- GitHub Actions: runs on push/PR to `main` (`.github/workflows/ci.yml`)
+
+## Deployment
+
+- Hosting: Vercel (recommended)
+- Configure env vars in the Vercel dashboard
+- Connect GitHub repo and push to `main`
+- Provision PostgreSQL (Vercel Postgres or external) and set `DATABASE_URL`
+
+## Notes
+
+- Icons are rendered in a way that works well with Turbopack and can be colorized via Tailwind gradients
+- The login route sets the `session` cookie securely; logout clears it
+- The admin footer hides on `/admin/login`; public footer shows your name and profile links
+
+## Troubleshooting
+
+- If you see a middleware deprecation message in older builds, this project uses server‑side auth checks instead
+- Lint warnings about `<img>` are safe for previews; use `next/image` for large images to optimize LCP
