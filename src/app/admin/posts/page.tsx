@@ -41,7 +41,7 @@ export default async function AdminPostsPage({ searchParams }: { searchParams?: 
             </tr>
           </thead>
           <tbody>
-            {posts.map(p => (
+            {posts.map((p: any) => (
               <tr key={p.id} className="border-t border-white/10">
                 <td className="p-3 align-top w-[40%]">
                   <div className="font-medium">{p.title}</div>
