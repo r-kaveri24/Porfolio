@@ -27,6 +27,10 @@ function normalize(url: string): string {
   return out
 }
 
+if ((process.env.PGSSLMODE || '').toLowerCase() === 'no-verify' || (process.env.DB_TLS_INSECURE || '') === '1') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+}
+
 const connectionString = normalize(process.env.DATABASE_URL ?? '')
 const adapter = new PrismaPg({ connectionString })
 
