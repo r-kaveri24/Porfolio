@@ -3,10 +3,6 @@ import { TechIcon } from '@/components/TechIcon'
 
 const footerLinks = [
   {
-    title: "LinkdIN",
-    link: "https://www.linkedin.com/in/kaveri-raut-7a4945255?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_apps",
-  },
-  {
     title: "Twitter",
     link: "https://x.com/KaveriRaut16194",
   },

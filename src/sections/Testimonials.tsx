@@ -1,9 +1,9 @@
 "use client"
-import scapeFlow from "@/assets/images/scrapeFlow.png";
-import drakeStudio from "@/assets/images/drakestudio.png";
+import summarization from "@/assets/images/summarization.png";
+import chatwithsearch from "@/assets/images/chatwithsearch.png";
 import playingMarket from "@/assets/images/playing-market.png";
 import mesium from "@/assets/images/mesium.png";
-import wingman from "@/assets/images/Wingman.png";
+import devcook from "@/assets/images/devcook.png"
 import { SectionHeader } from "@/components/SectionHeadet";
 import Image from "next/image";
 import { Card } from "@/components/card";
@@ -11,33 +11,29 @@ import { Fragment } from "react";
 
 const testimonials = [
   {
-    name: "Drake studio",
-    src: "https://drake-studio.vercel.app/",
-    image: drakeStudio,
-  },
-  {
-    name: "Playing Market",
-    src: "https://headphones-webpage.vercel.app/",
-    image: playingMarket,
-
-  },
-  {
-    name: "Scape Flow",
-    src: "https://scrap-flow.vercel.app/",
-    image: scapeFlow,
-
-  },
-  {
-    name: "Mesium Website",
-    src: "https://museum-website-five.vercel.app/",
+    name: "JEE Question Generator",
+    src: "YOUR_JEE_PROJECT_LINK",
     image: mesium,
-
   },
   {
-    name: "Admin Panel",
-    src: "https://wingman-assignment-snowy.vercel.app/",
-    image: wingman,
-
+    name: "Next Word Prediction",
+    src: "YOUR_NEXT_WORD_PROJECT_LINK",
+    image: playingMarket,
+  },
+  {
+    name: "AI Search Engine",
+    src: "https://searchengine-ruszhtxdtiwrc9y99dag3s.streamlit.app/",
+    image: chatwithsearch,
+  },
+  {
+    name: "Summarize Text From Website",
+    src: "https://summarizationytwebsite-medfhys6hfntk3zu2rszpr.streamlit.app/",
+    image: summarization,
+  },
+  {
+    name: "DevCook",
+    src: "https://devcook.app/",
+    image: devcook,
   },
 ];
 

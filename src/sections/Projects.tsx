@@ -1,4 +1,4 @@
-import scapeFlow from "@/assets/images/scrapeFlow.png";
+import devcook from "@/assets/images/devcook.png";
 import drakeStudio from "@/assets/images/drakestudio.png";
 import playingMarket from "@/assets/images/playing-market.png";
 import CheckIcon from "@/assets/icons/check-circle.svg"
@@ -10,43 +10,44 @@ import { SectionHeader } from "@/components/SectionHeadet";
 import { Card } from "@/components/card";
 
 const portfolioProjects = [
-  {
-    technology: "Next.js, TypeSciprt, Shad/cn, Tanstack, Prisma",
-    year: "Jan 2024",
-    title: "Scrap Flow",
-    results: [
-      { title: "Web scraping with puppeteer." },
-      { title: "Implemented the OpenAI." },
-      { title: "Automation done easy way." },
-    ],
-    link: "https://scrap-flow.vercel.app/",
-    image: scapeFlow,
-  },
-  {
-    technology: "React, Locomotion, framermotion, styled compoent.",
-    year: "Jan 2024",
-    title: "Drake Studio",
-    results: [
-      { title: "Smooth scrolling animation with locomotion." },
-      { title: "Customer engaging website with cool ui." },
-      { title: "Responsive with all devices." },
-    ],
-    link: "https://drake-studio.vercel.app/",
-    image: drakeStudio,
-  },
-  {
-    technology: "React, tailwind, framermotion,",
-    year: "Dec 2023",
-    title: "Playing Market",
-    results: [
-      { title: "Playing Market delivers dynamic, animated shopping." },
-      { title: "Hover effects bring titles and cards to life." },
-      { title: "Interactive icons add a unique twist to every hover." },
-    ],
-    link: "https://headphones-webpage.vercel.app/",
-    image: playingMarket,
-  },
+{
+technology: "React, Next.js, Python, LLMs, Prompt Engineering, REST APIs",
+
+title: "DevCook",
+results: [
+{ title: "AI-powered developer assistant for generating and improving code." },
+{ title: "Integrated LLMs with prompt engineering for intelligent responses." },
+{ title: "Built a responsive interface with modern web technologies." },
+],
+link: "devcook.app",
+image: devcook,
+},
+{
+technology: "Python, TensorFlow, Keras, NLP, RNN, LSTM",
+
+title: "Next Word Prediction",
+results: [
+{ title: "Built an NLP model for predicting the next word in a sequence." },
+{ title: "Implemented tokenization, word embeddings, and LSTM networks." },
+{ title: "Trained a deep learning model using TensorFlow and Keras." },
+],
+link: "YOUR_NEXT_WORD_PREDICTION_LINK",
+image: drakeStudio,
+},
+{
+technology: "Python, LangChain, RAG, HuggingFace, ChromaDB, PyMuPDF",
+
+title: "JEE Question Generator",
+results: [
+{ title: "Built a RAG-based system for generating JEE-style questions." },
+{ title: "Created a knowledge base from previous-year questions and textbooks." },
+{ title: "Used embeddings, vector search, and topic mapping for relevant question generation." },
+],
+link: "YOUR_JEE_PROJECT_LINK",
+image: playingMarket,
+},
 ];
+
 
 export const ProjectsSection = () => {
   return <section id="projects" className="pb-16 lg:py-24 pt-20">
@@ -63,7 +64,6 @@ export const ProjectsSection = () => {
               <div className="lg:pb-16">
                 <div className="bg-gradient-to-r gap-2 from-emerald-300 to-sky-400 inline-flex font-bold uppercase tracking-widest text-sm text-transparent bg-clip-text">
                   <span>{project.technology}</span>
-                  <span>{project.year}</span>
 
                 </div>
                 <h3 className="font-serif text-2xl mt-2 md:mt-4  md:text-4xl">{project.title}</h3>

@@ -63,10 +63,10 @@ export const ContactSection = () => {
         message: '',
       });
     } catch (error) {
-      setLoading(false)
-      console.log(error)
-      alert('Something went wrong!')
-    }
+  setLoading(false);
+  console.error("EmailJS error:", error);
+  alert(`Something went wrong: ${JSON.stringify(error)}`);
+}
   };
   const router = useRouter();
   return (

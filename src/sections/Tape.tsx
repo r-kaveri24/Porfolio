@@ -2,18 +2,19 @@ import StarIcon from '@/assets/icons/star.svg'
 import { TechIcon } from '@/components/TechIcon'
 import { Fragment } from 'react';
 const words = [
-  'Performant',
-  'Accessible',
-  'Secure',
-  'Interactive',
-  'Scalable',
-  'User Friendly',
-  "Responsive",
-  'Maintainable',
-  'Serach Optimized',
-  'Usable',
-  'Reliable',
+'Generative AI',
+'LLMs',
+'RAG',
+'AI Agents',
+'LangChain',
+'Prompt Engineering',
+'Vector Databases',
+'NLP',
+'AI Automation',
+'Intelligent Apps',
+'AI Solutions',
 ]
+
 export const TapeSection = () => {
   return <div className='py-16 lg:py-24 overflow-clip'>
     <div className='bg-gradient-to-r from-emerald-300 to-sky-400 -rotate-3 -mx-1'>
