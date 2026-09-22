@@ -1,6 +1,6 @@
 import devcook from "@/assets/images/devcook.png";
-import drakeStudio from "@/assets/images/drakestudio.png";
-import playingMarket from "@/assets/images/playing-market.png";
+import chatwithsearch from "@/assets/images/chatwithsearch.png";
+import summarization from "@/assets/images/summarization.png";
 import CheckIcon from "@/assets/icons/check-circle.svg"
 import ArrowUpRightIcon from '@/assets/icons/arrow-up-right.svg'
 import { TechIcon } from '@/components/TechIcon'
@@ -19,32 +19,32 @@ results: [
 { title: "Integrated LLMs with prompt engineering for intelligent responses." },
 { title: "Built a responsive interface with modern web technologies." },
 ],
-link: "devcook.app",
+link: "https://rational-travel-159996.framer.app/",
 image: devcook,
 },
 {
 technology: "Python, TensorFlow, Keras, NLP, RNN, LSTM",
 
-title: "Next Word Prediction",
+title: "AI Search Engine",
 results: [
 { title: "Built an NLP model for predicting the next word in a sequence." },
 { title: "Implemented tokenization, word embeddings, and LSTM networks." },
 { title: "Trained a deep learning model using TensorFlow and Keras." },
 ],
-link: "YOUR_NEXT_WORD_PREDICTION_LINK",
-image: drakeStudio,
+link: "https://searchengine-ruszhtxdtiwrc9y99dag3s.streamlit.app/",
+image: chatwithsearch,
 },
 {
 technology: "Python, LangChain, RAG, HuggingFace, ChromaDB, PyMuPDF",
 
-title: "JEE Question Generator",
+title: "Summarize Text From Website",
 results: [
 { title: "Built a RAG-based system for generating JEE-style questions." },
 { title: "Created a knowledge base from previous-year questions and textbooks." },
 { title: "Used embeddings, vector search, and topic mapping for relevant question generation." },
 ],
-link: "YOUR_JEE_PROJECT_LINK",
-image: playingMarket,
+link: "https://summarizationytwebsite-medfhys6hfntk3zu2rszpr.streamlit.app/",
+image: summarization,
 },
 ];
 

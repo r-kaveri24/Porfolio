@@ -2,7 +2,6 @@
 import summarization from "@/assets/images/summarization.png";
 import chatwithsearch from "@/assets/images/chatwithsearch.png";
 import playingMarket from "@/assets/images/playing-market.png";
-import mesium from "@/assets/images/mesium.png";
 import devcook from "@/assets/images/devcook.png"
 import { SectionHeader } from "@/components/SectionHeadet";
 import Image from "next/image";
@@ -10,16 +9,7 @@ import { Card } from "@/components/card";
 import { Fragment } from "react";
 
 const testimonials = [
-  {
-    name: "JEE Question Generator",
-    src: "YOUR_JEE_PROJECT_LINK",
-    image: mesium,
-  },
-  {
-    name: "Next Word Prediction",
-    src: "YOUR_NEXT_WORD_PROJECT_LINK",
-    image: playingMarket,
-  },
+
   {
     name: "AI Search Engine",
     src: "https://searchengine-ruszhtxdtiwrc9y99dag3s.streamlit.app/",
@@ -32,7 +22,7 @@ const testimonials = [
   },
   {
     name: "DevCook",
-    src: "https://devcook.app/",
+    src: "https://rational-travel-159996.framer.app/",
     image: devcook,
   },
 ];
